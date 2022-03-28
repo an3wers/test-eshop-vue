@@ -32,13 +32,17 @@
         <h2 class="text-3xl leading-normal uppercase mb-10 text-black">New collection</h2>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 xl:grid-cols-4">
-            <div class="section-product">
-                <div class="section-product__img mb-2 w-full">
-                    <img src="@/assets/products/9.jpg" class=" h-full w-full object-cover" alt="">
-                </div>
-                <div class="section-product__title">Urban raincoat gray</div>
-                <div class="section-product__price">$510.00</div>
-            </div>
+            <router-link to="/category/product">
+              <div class="section-product">
+                  <div class="section-product__img mb-2 w-full">
+                      <img src="@/assets/products/9.jpg" class=" h-full w-full object-cover" alt="">
+                  </div>
+                  <div class="section-product__title">Urban raincoat gray</div>
+                  <div class="section-product__price">$510.00</div>
+              </div>
+            </router-link>
+            
+
             <div class="section-product">
                 <div class="section-product__img mb-2 w-full">
                     <img src="@/assets/products/9.jpg" class=" h-full w-full object-cover" alt="">

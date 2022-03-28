@@ -10,7 +10,9 @@
         </div>
         <div class="flex space-x-6">
           <router-link class="no-underline hover:underline" to="/">Home</router-link>
-          <router-link class="no-underline hover:underline" to="/category">Category</router-link>
+           <!-- Dropdown menu -->
+          <a class="no-underline hover:underline" href="#">Shop</a>
+          <!-- # Dropdown menu -->
           <router-link class="no-underline hover:underline" to="/about">About</router-link>
         </div>
         <div class="flex space-x-4">
