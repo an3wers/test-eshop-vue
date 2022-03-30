@@ -16,12 +16,12 @@ const routes = [
     component: About
   },
   {
-    path: '/shop/:category',
+    path: '/:category',
     name: 'category',
     component: Category
   },
   {
-    path: '/shop/category/product',
+    path: '/category/product',
     name: 'product',
     component: Product
   },

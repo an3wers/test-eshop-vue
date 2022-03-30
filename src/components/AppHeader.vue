@@ -42,8 +42,12 @@
                     :key="cat.id"
                     v-slot="{ active }"
                   >
+
+                 
                     <router-link
-                      :to="`/shop/${cat.slug.toLowerCase()}`"
+                      
+                      :to="`/${cat.slug}`"
+                     
                       :class="[
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm'
@@ -57,7 +61,7 @@
           </Menu>
 
           <!-- # Dropdown menu -->
-          <router-link class="no-underline hover:underline" to="/about"
+          <router-link class="no-underline hover:underline" :to="{name: 'about', params: {title: 'About'}}"
             >About</router-link
           >
         </div>
@@ -86,18 +90,22 @@
 <script>
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/outline'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
+import {useRouter} from 'vue-router'
 
 export default {
   setup() {
     const store = useStore()
+    const router = useRouter()
+
+    
     const getCategorylist = computed(() => {
       return store.getters['category/getCategoryList']
     })
 
     return {
-      getCategorylist
+      getCategorylist,
     }
   },
 

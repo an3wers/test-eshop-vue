@@ -1,35 +1,39 @@
+import axios from 'axios'
+
+
 export default {
-    namespaced: true,
-    state() {
-        return {
-           categoryList: [] 
-        }
+  namespaced: true,
+  state() {
+    return {
+      categoryList: [],
+    }
+  },
+  getters: {
+    getCategoryList(state) {
+      return state.categoryList
     },
-    getters: {
-          getCategoryList(state) {
-            return state.categoryList
-        }
+  },
+
+  mutations: {
+    updateCategoryList(state, payload) {
+      state.categoryList = payload
     },
+   
+  },
 
-    mutations: {
-        async updateCategoryList(state, payload) {
-            state.categoryList = await payload
-        }
+  actions: {
+    async updateCategoryList({ commit }) {
+      try {
+        const { data } = await axios.get(
+          'http://10.10.10.208:8000/catalog/all/'
+        )
+
+        commit('updateCategoryList', data)
+      } catch (error) {
+        console.log(error.message)
+      }
     },
-
-    actions: {
-        async updateCategoryList({commit}) {
-            
-           try {
-
-            const response = await fetch('http://10.10.10.208:8000/catalog/all/')
-            
-            commit('updateCategoryList', response.json())
-               
-           } catch (error) {
-               console.log(error.message)
-           }           
-
-        }
-    },
+    
+  }
+  
 }

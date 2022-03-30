@@ -21,8 +21,6 @@ export default {
     const store = useStore()
 
     const updateCategoryList = () => {
-
-
       store.dispatch('category/updateCategoryList')
     }
 
@@ -34,9 +32,6 @@ export default {
   components: {
     AppHeader,
     AppFooter
-  },
-
-
-
+  }
 }
 </script>

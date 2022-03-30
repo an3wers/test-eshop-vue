@@ -2,15 +2,7 @@
   <div id="product">
     <div class="container">
       <!-- Breadcrumbs -->
-      <div class="breadcrumb-app text-sm my-8 flex space-x-4 text-slate-500">
-        <router-link to="/">Home</router-link>
-        <span class="separator">/</span>
-        <!-- Dropdown -->
-        <a href="#">Shop</a>
-        <!-- # Dropdown -->
-        <span class="separator">/</span>
-        <router-link to="/">Category</router-link>
-      </div>
+      
       <!-- # Breadcrumbs -->
 
       <!-- Product body -->
