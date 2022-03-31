@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { catalogURL } from '@/api'
 
 export default {
   namespaced: true,
@@ -24,11 +24,12 @@ export default {
   actions: {
     async updateCategoryList({ commit }) {
       try {
-        const { data } = await axios.get(
-          'http://10.10.10.208:8000/catalog/all/'
-        )
-
-        commit('updateCategoryList', data)
+        
+        const response = await axios.get(catalogURL)
+        if(response.status == 200) {
+          commit('updateCategoryList', response.data)
+        }
+        
       } catch (error) {
         console.log(error.message)
       }

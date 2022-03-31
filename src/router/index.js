@@ -18,10 +18,15 @@ const routes = [
   {
     path: '/:category',
     name: 'category',
-    component: Category
+    component: Category,
+    // children: [{
+    //   path: '/:category/:product',
+    //   name: 'product',
+    //   component: Product
+    // }]
   },
   {
-    path: '/category/product',
+    path: '/:category/:product',
     name: 'product',
     component: Product
   },
@@ -29,7 +34,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 

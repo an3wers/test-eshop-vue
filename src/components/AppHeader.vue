@@ -12,7 +12,7 @@
             >Home</router-link
           >
           <!-- Dropdown menu -->
-
+          <!-- :to="`/${cat.slug}`" -->
           <!-- <a class="no-underline hover:underline" href="#">Shop</a> -->
 
           <Menu as="div" class="relative inline-block text-left">
@@ -46,7 +46,7 @@
                  
                     <router-link
                       
-                      :to="`/${cat.slug}`"
+                      :to="{name: 'category', params:{category: `${cat.slug}`, title: `${cat.name}`}}"
                      
                       :class="[
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
