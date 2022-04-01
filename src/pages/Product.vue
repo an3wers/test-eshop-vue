@@ -98,28 +98,22 @@
             <div class="product-body__button my-6">
               <button
                 type="submit"
-                class="w-80 flex items-center uppercase justify-center px-8 py-2 border border-transparent text-base rounded-md text-white bg-slate-900 hover:bg-slate-800"
+                :disabled="getIsAddedCart"
+                :class="[getIsAddedCart ? 'bg-slate-400 hover:bg-slate-400' : 'bg-slate-900 hover:bg-slate-800' ]"
+                @click.prevent="add(product)"
+                class="w-80 flex items-center uppercase justify-center px-8 py-2 border border-transparent text-base rounded-md ho text-white"
               >
-                Select size
+                {{ getIsAddedCart ? 'In cart' : 'add to cart' }}
               </button>
             </div>
             <!-- # Button -->
-
+            {{ getIsAddedCart }}
             <!-- Description -->
             <div class="product-body__description description my-6">
               <div class="description__title text-slate-500 my-2">
                 Description
               </div>
-              <div class="description__body">
-                <!-- <p>
-                Raincoat of a straight silhouette made of waterproof fabric with
-                a high collar and hidden hood. The drawstring on the hood allows
-                you to adjust the tightness of its fit, which provides
-                additional protection from wind and rain. The model has a zipper
-                and two side pockets. Another pocket is located inside the
-                raincoat.
-              </p> -->
-
+              <div v-if="productDescr.length" class="description__body">
                 <div v-for="stock in productDescr" :key="stock.id">
                   <p v-for="prop in stock.property" :key="prop.id">
                     <span class="font-semibold">{{ prop.property_type }}</span
@@ -138,26 +132,24 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
 import { baseHost } from '@/api'
 
-// http://10.10.10.208:8000/product/124/
-
 export default {
   setup() {
+    const store = useStore()
     const product = ref({})
     const productDescr = ref([])
     const route = useRoute()
-    // console.log(route.params.product)
     const productId = route.params.product
-
-    // console.log('Product: ', product)
+    const isAddedCart = ref(false)
 
     onMounted(() => {
-      window.scrollTo(0, 0)
       getProduct(productId)
+      // setIsAddedCart()
     })
 
     const getProduct = async id => {
@@ -166,17 +158,52 @@ export default {
 
         if (response.status == 200) {
           product.value = response.data
+          console.log(product.value)
           productDescr.value = response.data.stock
-          // console.log(product)
         }
       } catch (error) {
         console.log(error.message)
       }
     }
+
+    const getCart = computed(() => {
+      return store.getters['cart/getCart']
+    })
+
+
+    const getIsAddedCart = computed(() => {
+      return isAddedCart.value
+    })
+
+
+    // ?? работает но не понятно норм или нет
+    watch(product, val => {
+      
+      setIsAddedCart(val)
+
+    })
+  
+
+    const setIsAddedCart = function (prod) {
+      const cartArr = [...getCart.value]
+      const currentProd = cartArr.find(el => el.id === prod.id)
+      if (currentProd) {
+        isAddedCart.value = true
+      }
+    }
+
+    const add = function (product) {
+      const resultProd = { ...product, qty: 1 }
+      isAddedCart.value = true
+      store.dispatch('cart/addToCart', resultProd)
+    }
+
     return {
       product,
       baseHost,
-      productDescr
+      productDescr,
+      add,
+      getIsAddedCart
     }
   }
 }

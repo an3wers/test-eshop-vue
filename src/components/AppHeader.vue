@@ -79,7 +79,7 @@
               class="w-6 mr-1"
               alt=""
             />
-            <span class="header-cart-counter">0</span>
+            <span class="header-cart-counter">{{getCart.length}}</span>
           </a>
         </div>
       </div>
@@ -104,8 +104,13 @@ export default {
       return store.getters['category/getCategoryList']
     })
 
+    const getCart = computed(() => {
+      return store.getters['cart/getCart']
+    })
+
     return {
       getCategorylist,
+      getCart
     }
   },
 
@@ -114,7 +119,7 @@ export default {
     MenuButton,
     MenuItems,
     MenuItem,
-    ChevronDownIcon
+    ChevronDownIcon,
   }
 }
 </script>
