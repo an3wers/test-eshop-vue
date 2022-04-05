@@ -73,14 +73,14 @@
             <img src="@/assets/icons/search.svg" class="w-6" alt="search" />
           </a>
           <div class="divaider"></div>
-          <a class="header-cart flex items-center" href="@">
+          <router-link class="header-cart flex items-center" to="/cart">
             <img
               src="@/assets/icons/shopping-cart.svg"
               class="w-6 mr-1"
               alt=""
             />
             <span class="header-cart-counter">{{getCart.length}}</span>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

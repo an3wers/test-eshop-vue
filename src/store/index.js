@@ -4,6 +4,7 @@ import cart from './modules/cart.modules'
 
 export default createStore({
   state: {
+    userSession: null
   },
   getters: {
   },

@@ -11,6 +11,7 @@
 <script>
 import AppHeader from '@/components/AppHeader.vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { updateSession } from '@/updateUserSession'
 
 import { onMounted } from 'vue'
 
@@ -24,8 +25,18 @@ export default {
       store.dispatch('category/updateCategoryList')
     }
 
+    const updateCart = () => {
+      store.dispatch('cart/updateCart')
+    }
+
     onMounted(() => {
+      // Получение структуры каталога
       updateCategoryList()
+
+      // Обновление корзины
+      updateCart()
+     
+      
     })
   },
 

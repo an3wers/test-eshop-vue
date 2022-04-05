@@ -24,9 +24,7 @@ export default {
   actions: {
     async updateCategoryList({ commit }) {
       try {
-        
         const response = await axios.get(catalogURL)
-        console.log(response)
         if(response.status == 200) {
           commit('updateCategoryList', response.data)
         }
