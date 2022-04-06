@@ -110,7 +110,7 @@
                     : 'bg-slate-900 hover:bg-slate-800'
                 ]"
                 @click.prevent="add(product)"
-                class="w-80 flex items-center uppercase justify-center px-8 py-2 border border-transparent text-base rounded-md ho text-white"
+                class="w-80 flex items-center uppercase justify-center px-8 py-2 border border-transparent text-base rounded-md text-white"
               >
                 {{getCurrentProductStockToCart ? 'In cart' : 'Add to cart'}}
               </button>

@@ -3,6 +3,8 @@ export const baseHost = 'http://10.10.10.208:8000'
 export const newCollection = 'http://10.10.10.208:8000/product/new_collection/'
 export const cartApi = 'http://10.10.10.208:8000/cart/get_or_create/'
 export const addCart = 'http://10.10.10.208:8000/cart/add/'
+export const deleteFromCart = 'http://10.10.10.208:8000/cart/delete/'
+export const updateProductCart = 'http://10.10.10.208:8000/cart/update/'
 
 // для работы с корзиной http://10.10.10.208:8000/cart/get_or_create/
 

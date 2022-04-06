@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { cartApi, addCart } from '@/api'
+import { cartApi, addCart, deleteFromCart, updateProductCart } from '@/api'
 
 export default {
   namespaced: true,
@@ -15,7 +15,6 @@ export default {
   },
   mutations: {
     setProductToCart(state, product) {
-
       // const currenProduct = state.cart.find(el => el.id === product.id)
       // if (currenProduct) {
       //   // update product
@@ -30,7 +29,6 @@ export default {
       // }
 
       state.cart = product.cart_items
-
     },
     setSession(_, payload) {
       // console.log('Set session: ', payload)
@@ -41,30 +39,56 @@ export default {
     }
   },
   actions: {
-
-
     async addToCart({ commit }, product) {
       const sessionId = localStorage.getItem('sessionId')
       let response = null
 
-      if(sessionId) {
-
-         response = await axios.post(addCart, {
+      if (sessionId) {
+        response = await axios.post(addCart, {
           sessionId: sessionId,
           productId: product.id
         })
-        
+
         commit('setProductToCart', response.data)
         // console.log(response.data)
-
       }
-
-
-     
     },
 
+    async deleFromCart({ commit }, id) {
+      const sessionId = localStorage.getItem('sessionId')
 
-    deleFromCart({ commit }) {},
+      try {
+        const response = await axios.delete(deleteFromCart, {
+          data: {
+            sessionId: sessionId,
+            productId: id
+          }
+        })
+        commit('setCart', response.data)
+      } catch (error) {
+        console.log(error.messege)
+      }
+
+      // console.log('Delete prod vuex', id)
+    },
+
+    async updateCountProduct({ commit }, payload) {
+      const sessionId = localStorage.getItem('sessionId')
+      try {
+        const response = await axios.put(updateProductCart, {
+          sessionId: sessionId,
+          productId: payload.id,
+          count: payload.count
+        })
+        if (response.status === 200) {
+          commit('setCart', response.data)
+        }
+      } catch (error) {
+        console.log(error.messege)
+      }
+
+      // console.log('Update count vuex: ', payload)
+    },
 
     async updateCart({ commit }) {
       let sessionId = localStorage.getItem('sessionId')
@@ -78,7 +102,7 @@ export default {
         } else {
           // console.log(sessionId)
           response = await axios.post(cartApi, {
-            'sessionId': sessionId
+            sessionId: sessionId
           })
           if (response.status === 200) {
             commit('setCart', response.data)
