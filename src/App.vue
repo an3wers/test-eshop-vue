@@ -35,7 +35,8 @@ export default {
 
       // Обновление корзины
       updateCart()
-     
+
+      // console.log('rootState', store.getters['cart/getCartToken'])
       
     })
   },

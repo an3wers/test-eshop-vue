@@ -4,7 +4,8 @@ import cart from './modules/cart.modules'
 
 export default createStore({
   state: {
-    userSession: null
+    userSession: null,
+    cartToken: localStorage.getItem('CartToken')
   },
   getters: {
   },

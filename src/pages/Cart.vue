@@ -12,6 +12,7 @@
             <cart-product @remove="handleRemove" @updateCount="handleUpdate" v-for="prod in getCart" :key="prod.id" :product="prod" />
             
           </div>
+          <cart-remove-all @removeAll="handleRemoveAll" :products="getCart" />
         </div>
         <div class="lg:col-start-9 lg:col-end-12">
           <div class="cart-btn">
@@ -35,10 +36,12 @@
 import { useStore } from 'vuex'
 import {onMounted, computed, ref} from 'vue'
 import CartProduct from '@/components/cart/cart.product.vue'
+import CartRemoveAll from '@/components/cart/cart.removebtn.vue'
 
 export default {
   components: {
-    CartProduct
+    CartProduct,
+    CartRemoveAll
     },
   setup() {
     const store = useStore()
@@ -49,8 +52,12 @@ export default {
 
     const handleRemove = (id) => {
 
-      store.dispatch('cart/deleFromCart', id)
+      store.dispatch('cart/deleFromCart', [id])
 
+    }
+
+    const handleRemoveAll = (products) => {
+      store.dispatch('cart/deleFromCart', products)
     }
 
     const handleUpdate = (payload) => {
@@ -64,7 +71,8 @@ export default {
     return {
       getCart,
       handleRemove,
-      handleUpdate
+      handleUpdate,
+      handleRemoveAll
     }
   }
 }

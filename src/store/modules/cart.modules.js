@@ -1,70 +1,63 @@
 import axios from 'axios'
 import { cartApi, addCart, deleteFromCart, updateProductCart } from '@/api'
+import { remove } from '@vue/shared'
 
 export default {
   namespaced: true,
   state() {
     return {
-      cart: []
+      cart: [],
     }
   },
   getters: {
     getCart(state) {
       return state.cart
-    }
+    },
+    getCartToken(_, getters, rootState) {
+      return rootState.cartToken
+    },
+    
   },
   mutations: {
     setProductToCart(state, product) {
-      // const currenProduct = state.cart.find(el => el.id === product.id)
-      // if (currenProduct) {
-      //   // update product
-      //   state.cart = state.cart.map(el => {
-      //     if (el.id === currenProduct.id) {
-      //       el.qty += 1
-      //     }
-      //     return el
-      //   })
-      // } else {
-      //   state.cart.push(product)
-      // }
-
       state.cart = product.cart_items
     },
     setSession(_, payload) {
-      // console.log('Set session: ', payload)
-      localStorage.setItem('sessionId', payload.session)
+      localStorage.setItem('CartToken', payload.session)
     },
     setCart(state, payload) {
       state.cart = payload.cart_items
     }
   },
   actions: {
-    async addToCart({ commit }, product) {
-      const sessionId = localStorage.getItem('sessionId')
+    async addToCart({ commit, getters }, product) {
       let response = null
-
-      if (sessionId) {
-        response = await axios.post(addCart, {
-          sessionId: sessionId,
+      if (getters.getCartToken) {
+        const data = {
           productId: product.id
-        })
+        }
+        const headers = {
+          CartToken: getters.getCartToken
+        }
+
+        response = await axios.post(addCart, data, { headers: headers })
 
         commit('setProductToCart', response.data)
-        // console.log(response.data)
       }
     },
 
-    async deleFromCart({ commit }, id) {
-      const sessionId = localStorage.getItem('sessionId')
-
+    async deleFromCart({ commit, state, getters }, id) {
+      
+      const data = { productId: id }
+      
+      const headers = { CartToken: getters.getCartToken }
       try {
         const response = await axios.delete(deleteFromCart, {
-          data: {
-            sessionId: sessionId,
-            productId: id
-          }
+          headers: headers,
+          data: data
         })
         commit('setCart', response.data)
+  
       } catch (error) {
         console.log(error.messege)
       }
@@ -72,13 +65,17 @@ export default {
       // console.log('Delete prod vuex', id)
     },
 
-    async updateCountProduct({ commit }, payload) {
-      const sessionId = localStorage.getItem('sessionId')
+    async updateCountProduct({ commit, getters }, payload) {
       try {
-        const response = await axios.put(updateProductCart, {
-          sessionId: sessionId,
+        const data = {
           productId: payload.id,
           count: payload.count
+        }
+        const headers = {
+          CartToken: getters.getCartToken
+        }
+        const response = await axios.put(updateProductCart, data, {
+          headers: headers
         })
         if (response.status === 200) {
           commit('setCart', response.data)
@@ -90,19 +87,24 @@ export default {
       // console.log('Update count vuex: ', payload)
     },
 
-    async updateCart({ commit }) {
-      let sessionId = localStorage.getItem('sessionId')
+    async updateCart({ commit, getters }) {
       let response = null
+      const token = getters.getCartToken
+      
       try {
-        if (!sessionId) {
-          response = await axios.post(cartApi, {})
+        if (!getters.getCartToken) {
+          // если токена нет
+          response = await axios.post(cartApi) // в headers ничего не передаю
           if (response.status === 200) {
             commit('setSession', response.data)
           }
         } else {
-          // console.log(sessionId)
-          response = await axios.post(cartApi, {
-            sessionId: sessionId
+          
+          response = await axios.post(cartApi, {}, {
+            headers: {
+              'CartToken': token
+            },
+            withCredentials: true,
           })
           if (response.status === 200) {
             commit('setCart', response.data)

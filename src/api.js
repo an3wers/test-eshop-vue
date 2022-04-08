@@ -34,3 +34,22 @@ axios.post(url, {  'sessionId':localStorage.getItem('sessionId')})
 [14:15, 04.04.2022] Александр Безденежных: в ответ структура корзины и поле message
 
 */
+
+
+/*
+
+[14:41, 07.04.2022] Александр Безденежных: [POST]
+http://10.10.10.208:8000/profile/auth/
+{
+    "username":"admin",
+    "password":"admin"
+}
+[14:42, 07.04.2022] Александр Безденежных: RESPONSE
+{
+    "message": "Вход осуществлен",
+    "id": 1,
+    "username": "admin",
+    "token": "gAAAAABiTqqSmXak7GRKnw_gX-C7PPoNmCEr12pEScj6eAtCK3C5WSSE61Czg0Rjjg2KHeh5ELQmnrdVp0XGpMDSR4KOpX7DHx7CDg99kYXpzoB7tQiYusoHenzT0Yhlbs0gTF8lDzrckN6ipnCXHtZXKh137Pk6aQ=="
+}
+
+*/

@@ -1,7 +1,7 @@
 <template>
   <div class="cart-product flex py-8 space-x-4">
     <div class="cart-product__img w-40">
-      <img src="@/assets/products/9.jpg" class="object-cover" alt="" />
+      <img :src="`${baseHost}${product.icon}`" class="object-cover" alt="" />
     </div>
     <div class="cart-product__body flex grow flex-col">
       <div class="cart-product__title">{{ product.product_stock.name }}</div>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { baseHost} from '@/api'
 import { XIcon } from '@heroicons/vue/outline'
 import {ref, watch} from 'vue'
 export default {
@@ -71,7 +72,8 @@ export default {
       return {
           count,
           defCount,
-          remove
+          remove,
+          baseHost
       }
   }
 }
