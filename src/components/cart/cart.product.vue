@@ -7,7 +7,7 @@
       <div class="cart-product__title">{{ product.product_stock.name }}</div>
       <div class="cart-product__size text-slate-500">XL</div>
       <div class="cart-product__price font-semibold mt-4">
-        {{ product.price }}
+        {{ currency(product.price) }}
       </div>
     </div>
     <div class="cart-product__count basis-20">
@@ -38,6 +38,7 @@
 import { baseHost} from '@/api'
 import { XIcon } from '@heroicons/vue/outline'
 import {ref, watch} from 'vue'
+import {currency} from '@/utils/currency'
 export default {
   components:{
       XIcon
@@ -73,7 +74,8 @@ export default {
           count,
           defCount,
           remove,
-          baseHost
+          baseHost,
+          currency
       }
   }
 }

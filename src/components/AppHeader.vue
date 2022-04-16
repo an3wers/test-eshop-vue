@@ -1,15 +1,15 @@
 <template>
-  <nav class="bg-slate-100 py-4">
+  <nav class="bg-slate-100 py-6">
     <div class="container">
-      <div class="nav flex justify-between">
+      <div class="nav flex items-center justify-between">
         <div class="logo">
           <router-link to="/">
             <img src="@/assets/logo-eshop.svg" alt="" />
           </router-link>
         </div>
-        <div class="flex space-x-6">
+        <div class="flex text-lg items-center space-x-6">
           <router-link class="no-underline hover:underline" to="/"
-            >Home</router-link
+            >Главная</router-link
           >
           <!-- Dropdown menu -->
           <!-- :to="`/${cat.slug}`" -->
@@ -20,7 +20,7 @@
               <MenuButton
                 class="inline-flex items-center justify-center no-underline hover:underline"
               >
-                Shop
+                Каталог
                 <ChevronDownIcon class="ml-1 h-4 w-4" aria-hidden="true" />
               </MenuButton>
             </div>
@@ -42,12 +42,14 @@
                     :key="cat.id"
                     v-slot="{ active }"
                   >
-
-                 
                     <router-link
-                      
-                      :to="{name: 'category', params:{category: `${cat.slug}`, title: `${cat.name}`}}"
-                     
+                      :to="{
+                        name: 'category',
+                        params: {
+                          category: `${cat.slug}`,
+                          title: `${cat.name}`
+                        }
+                      }"
                       :class="[
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm'
@@ -61,14 +63,14 @@
           </Menu>
 
           <!-- # Dropdown menu -->
-          <router-link class="no-underline hover:underline" :to="{name: 'about', params: {title: 'About'}}"
-            >About</router-link
+          <router-link
+            class="no-underline hover:underline"
+            :to="{ name: 'about', params: { title: 'About' } }"
+            >О проекте</router-link
           >
         </div>
         <div class="flex space-x-4">
-          <a href="#">
-            <img src="@/assets/icons/user.svg" class="w-6" alt="profile" />
-          </a>
+         <btn-profile />
           <a href="#">
             <img src="@/assets/icons/search.svg" class="w-6" alt="search" />
           </a>
@@ -79,27 +81,31 @@
               class="w-6 mr-1"
               alt=""
             />
-            <span class="header-cart-counter">{{getCart.length}}</span>
+            <span class="header-cart-counter">{{ getCart.length }}</span>
           </router-link>
         </div>
       </div>
     </div>
   </nav>
+
+  
 </template>
 
 <script>
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import BtnProfile from '@/components/profile/btnProfile.vue'
 import { ChevronDownIcon } from '@heroicons/vue/outline'
 import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
+
 
 export default {
   setup() {
     const store = useStore()
     const router = useRouter()
 
-    
+
     const getCategorylist = computed(() => {
       return store.getters['category/getCategoryList']
     })
@@ -108,9 +114,12 @@ export default {
       return store.getters['cart/getCart']
     })
 
+    
+
     return {
       getCategorylist,
-      getCart
+      getCart,
+
     }
   },
 
@@ -120,6 +129,9 @@ export default {
     MenuItems,
     MenuItem,
     ChevronDownIcon,
+    BtnProfile
+
+    
   }
 }
 </script>

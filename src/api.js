@@ -5,6 +5,7 @@ export const cartApi = 'http://10.10.10.208:8000/cart/get_or_create/'
 export const addCart = 'http://10.10.10.208:8000/cart/add/'
 export const deleteFromCart = 'http://10.10.10.208:8000/cart/delete/'
 export const updateProductCart = 'http://10.10.10.208:8000/cart/update/'
+export const regURL = 'http://10.10.10.208:8000/profile/registration/'
 
 // для работы с корзиной http://10.10.10.208:8000/cart/get_or_create/
 
@@ -51,5 +52,63 @@ http://10.10.10.208:8000/profile/auth/
     "username": "admin",
     "token": "gAAAAABiTqqSmXak7GRKnw_gX-C7PPoNmCEr12pEScj6eAtCK3C5WSSE61Czg0Rjjg2KHeh5ELQmnrdVp0XGpMDSR4KOpX7DHx7CDg99kYXpzoB7tQiYusoHenzT0Yhlbs0gTF8lDzrckN6ipnCXHtZXKh137Pk6aQ=="
 }
+
+*/
+
+/*
+Авторизация/ регистрация
+
+
+profile/auth
+ """
+    Headers:
+        CartToken
+    Data:
+        username
+        password
+    """
+
+
+
+profile/registration
+    """
+    Headers:
+        CartToken
+    Data:
+        name
+        email
+        password
+    """
+    response: {message: 'User test created', user_id: 4, name: 'test', email: 'test@test.ru'} pass 123456
+
+
+profile/logout
+   """
+    Headers:
+        Authorization
+    Data:
+        user_id
+
+    """
+
+
+profile/change_password
+   """
+    Headers:
+        Authorization
+    Data:
+        user_id
+        new_password
+
+    """    
+
+profile/get_info
+    """
+    Headers:
+        Authorization
+    Data:
+        user_id
+    """
+
 
 */

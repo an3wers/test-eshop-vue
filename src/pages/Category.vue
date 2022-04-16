@@ -1,6 +1,7 @@
 <template>
   <div id="category">
     <div class="container">
+      <!-- Сделать функционал хлебных крошек -->
       <app-breadcrumbs :items="items" />
       <h1 class="text-4xl uppercase mb-8" v-if="getCategory">
           {{ getCategory.name }}
@@ -17,9 +18,7 @@
         </div>
 
 
-        <!-- <p v-for="prod in products" :key="prod.id">
-          {{ prod.name }}
-        </p> -->
+        <!-- Сделать функционал постраничной навигации -->
       </div>
     </div>
   </div>
@@ -48,7 +47,6 @@ export default {
     const page = ref(1)
 
     const getAlias = computed(() => {
-      // console.log('Alias ', route.params.category)
         return route.params.category
     })
 
@@ -59,7 +57,6 @@ export default {
     const getCategory = computed(() => {
          const result = [...store.getters['category/getCategoryList']]
          const currentCat = result.find(el => el.slug === getAlias.value)
-        //  console.log('Current cat ', currentCat)
          return currentCat
     })
   

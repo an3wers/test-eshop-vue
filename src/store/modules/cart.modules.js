@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { cartApi, addCart, deleteFromCart, updateProductCart } from '@/api'
-import { remove } from '@vue/shared'
+
 
 export default {
   namespaced: true,
@@ -92,7 +92,7 @@ export default {
       const token = getters.getCartToken
       
       try {
-        if (!getters.getCartToken) {
+        if (!token) {
           // если токена нет
           response = await axios.post(cartApi) // в headers ничего не передаю
           if (response.status === 200) {

@@ -14,7 +14,7 @@
           </div>
           <cart-remove-all @removeAll="handleRemoveAll" :products="getCart" />
         </div>
-        <div class="lg:col-start-9 lg:col-end-12">
+        <div class="lg:col-start-9 lg:col-end-12 space-y-4">
           <div class="cart-btn">
             <button
                 type="submit"
@@ -23,6 +23,7 @@
                 Checkout
               </button>
           </div>
+          <order-summery :products="getCart" />
         </div>
       </div>
       <div v-else>
@@ -37,11 +38,13 @@ import { useStore } from 'vuex'
 import {onMounted, computed, ref} from 'vue'
 import CartProduct from '@/components/cart/cart.product.vue'
 import CartRemoveAll from '@/components/cart/cart.removebtn.vue'
+import OrderSummery from '@/components/cart/cart.summery.vue'
 
 export default {
   components: {
     CartProduct,
-    CartRemoveAll
+    CartRemoveAll,
+    OrderSummery
     },
   setup() {
     const store = useStore()
